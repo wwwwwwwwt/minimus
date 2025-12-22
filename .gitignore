@@ -27,6 +27,7 @@ MANIFEST
 venv/
 ENV/
 env/
+.venv
 
 # IDE
 .vscode/
@@ -66,7 +67,4 @@ dmypy.json
 *.log
 *.sqlite
 *.db
-
-# Lock files (保留 uv.lock，但忽略其他锁文件)
-# uv.lock 通常应该提交
 
