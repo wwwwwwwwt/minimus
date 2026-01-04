@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 import logging
 from app.interfaces.schemas.base import Response
+from app.application.errors.exceptions import BadRequestError, NotFoundError
 
 logger = logging.getLogger(__name__)
 
@@ -14,3 +15,8 @@ async def healthz() -> Response:
     logger.info("健康检查")
     # todo 检查redis postgres 等组件的运行状态
     return Response.success(data={"status": "ok"})
+
+@router.get(path="/test-exception", summary="测试异常处理")
+async def test_exception():
+    """测试异常处理器"""
+    raise BadRequestError("这是一个测试异常")
