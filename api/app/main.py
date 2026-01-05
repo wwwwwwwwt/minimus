@@ -8,6 +8,7 @@ from .infrastructure.logging import set_logging
 from .interfaces.endpoints.routes import routers
 from .interfaces.errors.exception_handler import register_exception_handlers
 from .infrastructure.storage.redis import get_redis_client
+from .infrastructure.storage.postgres import get_postgres
 # 1.加载全局配置
 settings = get_settings()
 
@@ -33,6 +34,8 @@ async def lifespan(app: FastAPI):
     # 8.注册Redis客户端
     redis_client = get_redis_client()
     await redis_client.init()
+    postgres_client = get_postgres()
+    await postgres_client.init()
 
     try:
         # lifespam节点/分界

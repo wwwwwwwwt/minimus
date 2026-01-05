@@ -16,9 +16,10 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = Field(default="INFO", description="日志级别")
     LOG_FILE: str = Field(default="logs/minimus.log", description="日志文件路径")
     DATABASE_URL: str = Field(
-        default="postgresql://user:password@localhost:5432/minimus",
+        default="postgresql+asyncpg://postgres:123456@localhost:15431/manus",
         description="数据库连接 URL"
     )
+    DATABASE_PASSWORD: str = Field(default="123456", description="数据库密码")
     REDIS_HOST: str = Field(default="localhost", description="Redis 主机地址")
     REDIS_PORT: int = Field(default=6379, description="Redis 端口")
     REDIS_DB: int = Field(default=0, description="Redis 数据库")
