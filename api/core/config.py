@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     )
     REDIS_HOST: str = Field(default="localhost", description="Redis 主机地址")
     REDIS_PORT: int = Field(default=6379, description="Redis 端口")
+    REDIS_DB: int = Field(default=0, description="Redis 数据库")
 
 
 

@@ -7,6 +7,7 @@ from core.config import get_settings
 from .infrastructure.logging import set_logging
 from .interfaces.endpoints.routes import routers
 from .interfaces.errors.exception_handler import register_exception_handlers
+from .infrastructure.storage.redis import get_redis_client
 # 1.加载全局配置
 settings = get_settings()
 
@@ -29,11 +30,15 @@ async def lifespan(app: FastAPI):
     logger.info("Minimus API is starting...")
 
     # todo
+    # 8.注册Redis客户端
+    redis_client = get_redis_client()
+    await redis_client.init()
 
     try:
         # lifespam节点/分界
         yield
     finally:
+        await redis_client.close()
         logger.info("Minimus API is shutting down...")
 
 # 4.创建FastAPI应用实例
@@ -59,6 +64,9 @@ register_exception_handlers(app)
 
 # 6.包含所有API路由
 app.include_router(routers, prefix="/api")
+
+
+
 
 @app.get("/")
 async def read_root():
