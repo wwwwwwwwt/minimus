@@ -9,6 +9,7 @@ from .interfaces.endpoints.routes import routers
 from .interfaces.errors.exception_handler import register_exception_handlers
 from .infrastructure.storage.redis import get_redis_client
 from .infrastructure.storage.postgres import get_postgres
+from .infrastructure.storage.cos import get_cos
 # 1.加载全局配置
 settings = get_settings()
 
@@ -36,12 +37,16 @@ async def lifespan(app: FastAPI):
     await redis_client.init()
     postgres_client = get_postgres()
     await postgres_client.init()
+    cos_client = get_cos()
+    await cos_client.init()
 
     try:
         # lifespam节点/分界
         yield
     finally:
         await redis_client.close()
+        await postgres_client.shutdown()
+        await cos_client.shutdown()
         logger.info("Minimus API is shutting down...")
 
 # 4.创建FastAPI应用实例

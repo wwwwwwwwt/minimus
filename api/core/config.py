@@ -24,6 +24,14 @@ class Settings(BaseSettings):
     REDIS_PORT: int = Field(default=6379, description="Redis 端口")
     REDIS_DB: int = Field(default=0, description="Redis 数据库")
 
+    COS_SECRETID: str = Field(default="123", description="COS 密钥 ID")
+    COS_SECRETKEY: str = Field(default="123", description="COS 密钥")
+    COS_REGION: str = Field(default="ap-123", description="COS 区域")
+    COS_SCHEME: str = Field(default="https", description="COS 协议")
+    COS_BUKET: str = Field(default="minimus-123", description="COS 桶名")
+    COS_DOMAIN: str = Field(default="", description="COS 域名")
+
+
 
 
 # 创建全局配置实例

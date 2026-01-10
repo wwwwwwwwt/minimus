@@ -30,9 +30,15 @@ class Postgres:
         try:
             # 2.创建异步引擎
             logger.info("正在初始化Postgres连接...")
+            # 使用 connect_args 显式指定连接参数，避免服务名解析问题
             self._engine = create_async_engine(
                 self._settings.DATABASE_URL,
                 echo=True if self._settings.ENV == "development" else False,
+                connect_args={
+                    "server_settings": {
+                        "application_name": "minimus_api"
+                    }
+                }
             )
 
             # 3.创建会话工厂
